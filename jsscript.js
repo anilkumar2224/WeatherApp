@@ -48,7 +48,7 @@ cityForm.addEventListener('submit',e=>{
     updateCity(city)
     .then(data=>{
        updateUI(data);
-       
+       document.getElementById('card').scrollIntoView();
     })
     .catch(err=>{
         if(card.classList.contains('d-none')){
@@ -59,6 +59,7 @@ cityForm.addEventListener('submit',e=>{
         time.setAttribute('src','notfound.png');
         icon.classList.add('hide');
      details.innerHTML='';
+        document.getElementById('card').scrollIntoView();
      console.log(err);
     })
 
