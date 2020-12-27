@@ -16,6 +16,7 @@ const getCityCode=async (city)=>{
     const query=`?apikey=${key}&q=${city}`;
 
 
+    
     const response=await fetch(baseurl+query);
     const data=await response.json();
     
