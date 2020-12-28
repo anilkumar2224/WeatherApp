@@ -1,27 +1,29 @@
-const key='PuZokHMzLsdHoHmSReXoq0iqMYeUq5rT';
+const key='593eba9d18d85f5c9c2d273b05bd74ce';
 
 
 
-const getWeather=async (citycode)=>{
-    const baseurl='https://dataservice.accuweather.com/currentconditions/v1/';
-    const query=`${citycode}?apikey=${key}`;
 
+var Kel=273;
+const getWeather=async (city)=>{
+    const baseurl='http://api.openweathermap.org/data/2.5/weather';
+    const query=`?q=${city}&appid=${key}`;
+  
 
     const response=await fetch(baseurl+query);
-    const data=await response.json();
-    return data[0];
+   const data=await response.json();
+    return data;
 };
-const getCityCode=async (city)=>{
-    const baseurl='https://dataservice.accuweather.com/locations/v1/cities/search';
-    const query=`?apikey=${key}&q=${city}`;
 
-
-    
-    const response=await fetch(baseurl+query);
-    const data=await response.json();
-    
-return data[0];
-
+const getCurrentLocation=async(position)=>{
+const baseurl='http://api.openweathermap.org/data/2.5/weather';
+const query=`?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${key}`;
+const response=await fetch(baseurl+query);
+   const data=await response.json();
+   console.log(position.coords.latitude,position.coords.longitude);
+   localStorage.setItem('city',data.name);
 };
+
+
+
 
 
