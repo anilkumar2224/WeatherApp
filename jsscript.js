@@ -3,14 +3,15 @@ const card=document.querySelector('.card');
 const details=document.querySelector('.details');
 const time=document.querySelector('img.time');
 const icon=document.querySelector('.icon img');
-
+var Kel=273;
 const updateUI=(data)=>{
-    const {cityInfo,weather}=data;
+    const weather=data;
+   
     details.innerHTML=`
-        <h5 class="my-3">${cityInfo.EnglishName}</h5>
-        <div  class="my-3">${weather.WeatherText}</div>
+        <h5 class="my-3">${weather.name}, ${weather.sys.country}</h5>
+        <div  class="my-3">${weather.weather[0].description}</div>
         <div class="display-4 my-4">
-        <span style="color: orange;">${weather.Temperature.Metric.Value}</span>
+        <span style="color: orange;">${Math.floor(weather.main.temp-Kel)}</span>
         <span style="color: orange;">&deg;C</span>
         </div>
     `; 
@@ -18,8 +19,10 @@ const updateUI=(data)=>{
     time.classList.remove('size');
     icon.classList.remove('hide'); 
     let timeSrc=null;
-    const iconSrc=`icons/${weather.WeatherIcon}.svg`;
-    if(weather.IsDayTime){
+    const iconSrc=`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`;
+    const str=`${weather.weather[0].icon}`;
+    const IsDayTime=str.charAt(str.length-1);
+    if(IsDayTime=='d'){
         timeSrc='day.svg';
     }
     else{
@@ -35,10 +38,9 @@ const updateUI=(data)=>{
 
 const updateCity=async (city)=>{
 
-   const cityInfo=await getCityCode(city);
-   const weather= await getWeather(cityInfo.Key);
+   const weather= await getWeather(city);
 
-   return { cityInfo,weather};
+   return weather;
 
 }
 cityForm.addEventListener('submit',e=>{
@@ -59,19 +61,19 @@ cityForm.addEventListener('submit',e=>{
         time.setAttribute('src','notfound.png');
         icon.classList.add('hide');
      details.innerHTML='';
-        document.getElementById('card').scrollIntoView();
      console.log(err);
+     document.getElementById('card').scrollIntoView();
     })
 
    
 });
-localStorage.setItem('city','anil');
-if(localStorage.getItem('city')=='anil'){
+
+if(localStorage.getItem('city')){
     updateCity(localStorage.getItem('city'))
     .then(data=>{
         updateUI(data);
      })
-     
+      
     }
 
     function draw() {
@@ -103,4 +105,15 @@ if(localStorage.getItem('city')=='anil'){
         }
         }
         draw();
+        
+
+
+        function getLocation() {
+            if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(getCurrentLocation);
+               
+            } 
+          }
+          getLocation();
+         
         
