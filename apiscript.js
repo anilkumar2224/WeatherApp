@@ -1,8 +1,6 @@
 const key='593eba9d18d85f5c9c2d273b05bd74ce';
 
 
-
-
 var Kel=273;
 const getWeather=async (city)=>{
     const baseurl='https://api.openweathermap.org/data/2.5/weather';
