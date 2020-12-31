@@ -110,7 +110,7 @@ if(localStorage.getItem('city')){
 
         function getLocation() {
             if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(getCurrentLocation);
+              navigator.geolocation.watchPosition(getCurrentLocation);
                
             } 
           }
